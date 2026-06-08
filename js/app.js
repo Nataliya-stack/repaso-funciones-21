@@ -14,22 +14,22 @@ const obtenerPromedio = (arrayNumeros) => {
 
 btnPromedio.addEventListener("click", () => {
     const valorInput = inputPromedio.value;
+    let textoResultado = "";
 
     if (valorInput.trim() === "") {
-        resultadoPromedio.textContent = "Por favor, ingrese números.";
-        return;
+        textoResultado = "Por favor, ingrese números.";
+    } else {
+        const arrayOriginal = valorInput.split(/[\s,]+/).filter(Boolean).map(Number);
+
+        if (arrayOriginal.some(isNaN)) {
+            textoResultado = "Error: ingrese solo números (separados por espacio o coma).";
+        } else {
+            const promedioFinal = obtenerPromedio(arrayOriginal);
+            textoResultado = promedioFinal; 
+        }
     }
 
-    const arrayOriginal = valorInput.split(/[\s,]+/).filter(Boolean).map(Number);
-
-    if (arrayOriginal.some(isNaN)) {
-        resultadoPromedio.textContent = "Error: ingrese solo números (separados por espacio o coma).";
-        return;
-    }
-
-    const promedioFinal = obtenerPromedio(arrayOriginal);
-
-    resultadoPromedio.textContent = promedioFinal;
+    resultadoPromedio.textContent = textoResultado;
 
     inputPromedio.value = "";
     inputPromedio.focus();
